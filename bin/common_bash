@@ -1,0 +1,59 @@
+#!/bin/bash
+# common_bash
+
+# Description : Used as a common library of bash functions to standardise the usage of scripts.
+#
+# Usage:
+
+## # Just place the following (uncommented) at the top of your Shell script to use # ###
+
+### GLOBAL Variables
+#
+# readonly PROGNAME=$(basename $0)
+# readonly PROGDIR=$(dirname $0)
+# readonly ARGS="$@"
+#
+# source ${PROGDIR}/common_bash
+
+## # Just place the following (uncommented) at the top of your Shell script to use # ###
+
+RETURN_CODE=0 # SUCCESS
+
+# Colours
+PURPLE="\033[01;35m"
+BLUE="\033[01;34m"
+YELLOW="\033[01;33m" # Blue on Bamboo run's, can be yellow on some terminals.
+GREEN="\033[01;32m"
+RED="\033[01;31m"
+RESET="\033[00m"
+
+# Ensure we set the PATH dependancies for the script
+# export PATH=$PATH:/usr/local/bin
+
+########################################################
+# Common Functions 
+########################################################
+
+# Common 'log' funtion
+# 
+# Usage: 
+# log info "example of logging an info event"
+# log heading "example of logging an heading event"
+#
+function log ()
+{
+  local status=$1
+  local msg=$2
+
+  case $status in
+    warning) echo -e "${YELLOW}[warning] - ${msg}${RESET}";;
+    error)   echo -e "${RED}[ERROR] - ${msg}${RESET}";;
+    success) echo -e "${GREEN}[SUCCESS] - ${msg}${RESET}";;
+    info)    echo -e "${BLUE}[info] - ${msg}${RESET}";;
+    running) echo -e "${BLUE}[running] - ${msg}${RESET}";;
+    passed)  echo -e "${GREEN}[Passed]${RESET} - ${msg}";;
+    failed)  echo -e "${RED}[Failed]${RESET} - ${msg}";;
+    stage)   echo -e "${PURPLE}### [Stage : ${msg} ] ###${RESET}";;
+  esac
+}
+
